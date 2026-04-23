@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Génération des poules</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <div class="card">
+    <div class="icon">🎾</div>
+    <h1>Tennisado</h1>
+    <p class="subtitle">Génération des poules</p>
+
+    <!-- État : initial -->
+    <div id="state-idle">
+      <button class="generate-btn" onclick="callApi()">⚙️ Générer les poules</button>
+      <p class="idle-hint">Cliquez pour lancer la génération</p>
+    </div>
+
+    <!-- État : chargement -->
+    <div id="state-loading" class="hidden">
+      <div class="spinner"></div>
+      <p class="status-text">Génération en cours...</p>
+    </div>
+
+    <!-- État : succès -->
+    <div id="state-success" class="hidden">
+      <div class="success-icon">✓</div>
+      <p class="success-title">Poules générées avec succès !</p>
+      <p class="success-hint">Vous pouvez fermer cette page.</p>
+      <div id="response-data" class="response-box hidden"></div>
+    </div>
+
+    <!-- État : erreur -->
+    <div id="state-error" class="hidden">
+      <div class="error-icon">✕</div>
+      <p class="error-title">Erreur lors de la génération</p>
+      <p id="error-detail" class="error-detail"></p>
+      <button class="retry-btn" onclick="callApi()">Réessayer</button>
+    </div>
+  </div>
+
+  <script src="generer-poules.js"></script>
+</body>
+</html>
