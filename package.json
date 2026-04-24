@@ -1,0 +1,12 @@
+{
+  "name": "tournoi-tennis-admin",
+  "version": "1.0.0",
+  "description": "Interface admin Tennisado",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.0"
+  }
+}

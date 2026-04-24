@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tennisado — Générer les poules</title>
+  <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body>
+  <div class="layout">
+    <header class="header">
+      <a href="../index.html" class="back-btn">← Retour</a>
+      <span class="header-icon">🎾</span>
+      <h1>Tennisado <span class="header-sub">Admin</span></h1>
+    </header>
+
+    <main class="card">
+      <h2 class="card-title">Génération des poules</h2>
+
+      <!-- État : initial -->
+      <div id="state-idle">
+        <button class="generate-btn" onclick="callApi()">⚙️ Générer les poules</button>
+        <p class="idle-hint">Cliquez pour lancer la génération</p>
+      </div>
+
+      <!-- État : chargement -->
+      <div id="state-loading" class="hidden">
+        <div class="spinner"></div>
+        <p class="status-text">Génération en cours...</p>
+      </div>
+
+      <!-- État : succès -->
+      <div id="state-success" class="hidden">
+        <div class="result-icon success-icon">✓</div>
+        <p class="success-title">Poules générées avec succès !</p>
+        <p class="hint">Vous pouvez fermer cette page.</p>
+        <div id="response-data" class="response-box hidden"></div>
+      </div>
+
+      <!-- État : erreur -->
+      <div id="state-error" class="hidden">
+        <div class="result-icon error-icon">✕</div>
+        <p class="error-title">Erreur lors de la génération</p>
+        <p id="error-detail" class="error-detail"></p>
+        <button class="retry-btn" onclick="callApi()">Réessayer</button>
+      </div>
+    </main>
+  </div>
+
+  <script src="../js/generer-poules.js"></script>
+</body>
+</html>
