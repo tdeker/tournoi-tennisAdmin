@@ -11,7 +11,7 @@ async function callApi() {
   show("state-loading");
 
   try {
-    const response = await fetch(API_URL, { method: "GET" });
+    const response = await fetch(API_URL, { method: "POST" });
 
     if (!response.ok) {
       throw new Error(`HTTP ${response.status} — ${response.statusText}`);
