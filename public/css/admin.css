@@ -296,3 +296,60 @@ a {
 .hidden {
   display: none;
 }
+/* ===== Page Tableaux (à coller à la fin de public/css/admin.css) ===== */
+
+.tableau-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.tableau-controls label {
+  color: var(--subtle);
+  font-size: 0.95rem;
+}
+
+#tournoi-select {
+  flex: 1 1 220px;
+  min-width: 180px;
+  padding: 10px 12px;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.95rem;
+}
+
+#tournoi-select:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.tableau-controls .generate-btn {
+  flex: 0 0 auto;
+  width: auto;
+  padding: 10px 20px;
+}
+
+/* Le conteneur du bracket : on laisse respirer et on autorise le
+   défilement horizontal pour les grands tableaux (jusqu'à 64). */
+.brackets-viewer {
+  overflow-x: auto;
+  padding: 8px 0;
+}
+
+/* Adaptation légère du thème clair par défaut de brackets-viewer au
+   fond sombre de l'admin (surcharge minimale, non intrusive). */
+.brackets-viewer {
+  --primary-background: var(--surface);
+  --match-background: var(--bg);
+  --font-color: var(--text);
+  --win-color: var(--success);
+  --loss-color: var(--error);
+  --label-color: var(--muted);
+  --round-name-color: var(--subtle);
+  --connector-color: var(--border);
+  --border-color: var(--border);
+}

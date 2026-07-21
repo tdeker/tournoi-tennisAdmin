@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tennisado — Tableaux</title>
+  <link rel="stylesheet" href="../css/admin.css">
+  <!-- brackets-viewer.js (Drarig29) via jsDelivr -->
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/brackets-viewer@latest/dist/brackets-viewer.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/brackets-viewer@latest/dist/brackets-viewer.min.js"></script>
+</head>
+<body>
+  <div class="layout">
+    <header class="header">
+      <a href="../index.html" class="back-btn">← Retour</a>
+      <span class="header-icon">🎾</span>
+      <h1>Tennisado <span class="header-sub">Admin</span></h1>
+    </header>
+
+    <main class="card">
+      <h2 class="card-title">Tableaux — principal &amp; consolantes</h2>
+
+      <div class="tableau-controls">
+        <label for="tournoi-select">Tournoi :</label>
+        <select id="tournoi-select"></select>
+        <button class="generate-btn" id="afficher-btn" onclick="afficherTableau()">
+          Afficher
+        </button>
+      </div>
+
+      <!-- État : chargement -->
+      <div id="state-loading" class="hidden">
+        <div class="spinner"></div>
+        <p class="status-text">Chargement du tableau...</p>
+      </div>
+
+      <!-- État : erreur -->
+      <div id="state-error" class="hidden">
+        <div class="result-icon error-icon">✕</div>
+        <p class="error-title">Impossible d'afficher le tableau</p>
+        <p id="error-detail" class="error-detail"></p>
+      </div>
+
+      <!-- Le bracket est injecté ici par brackets-viewer -->
+      <div class="brackets-viewer"></div>
+    </main>
+  </div>
+
+  <script src="../js/bracket-viewer.js"></script>
+</body>
+</html>
