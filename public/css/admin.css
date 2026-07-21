@@ -296,7 +296,8 @@ a {
 .hidden {
   display: none;
 }
-/* ===== Page Tableaux (à coller à la fin de public/css/admin.css) ===== */
+/* ===== Page Tableaux — affichage ORDINATEUR ===== */
+/* À coller à la fin de public/css/admin.css */
 
 .tableau-controls {
   display: flex;
@@ -305,15 +306,11 @@ a {
   gap: 12px;
   margin-bottom: 24px;
 }
-
-.tableau-controls label {
-  color: var(--subtle);
-  font-size: 0.95rem;
-}
+.tableau-controls label { color: var(--subtle); font-size: 0.95rem; }
 
 #tournoi-select {
-  flex: 1 1 220px;
-  min-width: 180px;
+  flex: 0 1 340px;
+  min-width: 220px;
   padding: 10px 12px;
   background: var(--bg);
   color: var(--text);
@@ -321,35 +318,52 @@ a {
   border-radius: 8px;
   font-size: 0.95rem;
 }
+#tournoi-select:focus { outline: none; border-color: var(--accent); }
+.tableau-controls .generate-btn { flex: 0 0 auto; width: auto; padding: 10px 20px; }
 
-#tournoi-select:focus {
-  outline: none;
-  border-color: var(--accent);
+/* --- La carte du tableau prend TOUTE la largeur de l'écran ---
+   Sur desktop, un tableau de 64 est très large : on sort la carte
+   de la colonne étroite du layout et on autorise le scroll horizontal.
+   C'est CE point qui corrige l'aspect "mobile" (colonnes empilées). */
+.card--tableau {
+  max-width: none;          /* annule la largeur contrainte du layout */
+  width: calc(100vw - 48px);
+  margin-left: calc(-50vw + 50% + 24px);  /* recentre en pleine largeur */
 }
 
-.tableau-controls .generate-btn {
-  flex: 0 0 auto;
-  width: auto;
-  padding: 10px 20px;
-}
-
-/* Le conteneur du bracket : on laisse respirer et on autorise le
-   défilement horizontal pour les grands tableaux (jusqu'à 64). */
-.brackets-viewer {
+/* Conteneur scrollable : le bracket s'étale horizontalement, pas
+   verticalement. min-width force les tours à rester COTE A COTE. */
+.bracket-scroll {
   overflow-x: auto;
-  padding: 8px 0;
+  overflow-y: hidden;
+  padding: 8px 4px 20px;
+  -webkit-overflow-scrolling: touch;
+}
+.brackets-viewer {
+  min-width: max-content;   /* empêche l'empilement vertical des tours */
 }
 
-/* Adaptation légère du thème clair par défaut de brackets-viewer au
-   fond sombre de l'admin (surcharge minimale, non intrusive). */
+/* brackets-viewer expose ses couleurs en variables CSS : on l'accorde
+   au thème sombre de l'admin. */
 .brackets-viewer {
   --primary-background: var(--surface);
+  --secondary-background: var(--bg);
   --match-background: var(--bg);
   --font-color: var(--text);
   --win-color: var(--success);
   --loss-color: var(--error);
   --label-color: var(--muted);
-  --round-name-color: var(--subtle);
+  --hint-color: var(--muted);
   --connector-color: var(--border);
   --border-color: var(--border);
+  --round-name-color: var(--subtle);
+  font-size: 0.9rem;
+}
+/* Largeur des cellules de match, lisible sur grand écran. */
+.brackets-viewer .match { min-width: 220px; }
+
+/* Sur très petit écran seulement, on tolère un affichage compact. */
+@media (max-width: 640px) {
+  .card--tableau { width: 100%; margin-left: 0; }
+  .brackets-viewer .match { min-width: 180px; }
 }
