@@ -1,17 +1,26 @@
 /*
  * bracket-viewer.js — affichage des tableaux (principal & consolantes)
  * -------------------------------------------------------------------
- * Récupère un tournoi via l'API backend et le rend avec
- * brackets-viewer.js (Drarig29). Affiche l'ÉTAT EXACT de la table
- * Resultat : aucun résultat n'est simulé, les tours non remplis
- * restent vides, les positions sans joueur sont des byes.
+ * Librairie : bracketry (sbachinin/bracketry), importee en ESM depuis
+ * jsDelivr (le package ne fournit pas de build UMD/<script> classique).
+ *
+ * Recupere un tournoi via l'API backend et affiche l'ETAT EXACT de la
+ * table Resultat : aucun resultat n'est simule. Un tour non rempli
+ * reste vide ; une position sans joueur est un BYE (qualification
+ * automatique, sans "adversaire" affiche).
  *
  * Endpoints backend :
- *   GET /api/tournois              -> tournois AYANT des résultats
- *   GET /api/tableau/<nomTournoi>  -> payload brackets-viewer
+ *   GET /api/tournois              -> tournois AYANT des resultats
+ *   GET /api/tableau/<nomTournoi>  -> { rounds, matches } (format bracketry)
  */
 
 const API_BASE = "https://tournoi-tennisado-production.up.railway.app";
+
+// Import ESM depuis jsDelivr (bracketry n'expose pas de build UMD).
+let createBracket;
+let bracketryPret = import("https://cdn.jsdelivr.net/npm/bracketry/+esm")
+  .then((mod) => { createBracket = mod.createBracket; })
+  .catch((err) => afficherErreur(`Chargement de bracketry impossible : ${err.message}`));
 
 function show(id) {
   ["state-loading", "state-error"].forEach((s) => {
@@ -26,11 +35,12 @@ function show(id) {
 
 function afficherErreur(message) {
   show("state-error");
-  document.getElementById("error-detail").textContent = message;
+  const el = document.getElementById("error-detail");
+  if (el) el.textContent = message;
 }
 
-/* Menu déroulant : UNIQUEMENT les tournois présents dans Resultat
- * (le backend ne renvoie que ceux-là). Principal puis consolantes. */
+/* Menu deroulant : uniquement les tournois presents dans Resultat
+ * (le backend ne renvoie que ceux-la). Principal puis consolantes. */
 async function chargerListeTournois() {
   const select = document.getElementById("tournoi-select");
   const btn = document.getElementById("afficher-btn");
@@ -46,8 +56,8 @@ async function chargerListeTournois() {
       select.disabled = true;
       btn.disabled = true;
       afficherErreur(
-        "Aucun tournoi n'a encore de résultats. Initialisez un tableau " +
-        "dans la table Resultat pour le voir apparaître ici."
+        "Aucun tournoi n'a encore de resultats. Initialisez un tableau " +
+        "dans la table Resultat pour le voir apparaitre ici."
       );
       return;
     }
@@ -68,45 +78,43 @@ async function chargerListeTournois() {
 
 async function afficherTableau() {
   const nom = document.getElementById("tournoi-select").value;
-  if (!nom) { afficherErreur("Sélectionnez un tournoi."); return; }
+  if (!nom) { afficherErreur("Selectionnez un tournoi."); return; }
 
   show("state-loading");
   try {
+    await bracketryPret; // s'assure que createBracket est charge
+    if (!createBracket) throw new Error("bracketry n'a pas pu etre charge.");
+
     const res = await fetch(`${API_BASE}/api/tableau/${nom}`);
     const json = await res.json();
     if (!res.ok || !json.success) throw new Error(json.error || `HTTP ${res.status}`);
 
-    const data = json.data;
     show(null);
 
-    window.bracketsViewer.render(
-      {
-        stages: data.stage,
-        matches: data.match,
-        matchGames: data.match_game,
-        participants: data.participant,
-      },
-      {
-        selector: ".brackets-viewer",
-        clear: true,
-        customRoundName: (info) => nomDeTour(info),
-      }
-    );
+    const wrapper = document.querySelector(".bracket-wrapper");
+    wrapper.innerHTML = ""; // reinitialise avant un nouveau rendu
+
+    createBracket(json.data, wrapper, {
+      // Aucun score affiche (evolution future) : on ne fournit pas de
+      // "scores"/"currentScore" dans les sides, donc rien ne s'affiche.
+      displayWholeRounds: true,   // pas de tour partiellement visible
+      matchMaxWidth: 240,
+      useClassicalLayout: true,   // hauteur stable, adaptee au desktop
+      // Theme sombre, coherent avec le reste de l'admin.
+      rootBgColor: "#111827",
+      rootBorderColor: "#1f2d45",
+      matchTextColor: "#f1f5f9",
+      roundTitleColor: "#94a3b8",
+      connectionLinesColor: "#1f2d45",
+      matchFontSize: 15,
+    });
   } catch (err) {
     afficherErreur(err.message);
   }
 }
 
-/* Nom de tour à partir du nombre de tours restants : robuste quelle que
- * soit la taille (un tableau de 32 nomme son 1er tour "16es", etc.). */
-function nomDeTour(info) {
-  const restants = info.roundCount - info.roundNumber; // 0 = finale
-  const libelles = {
-    0: "Finale", 1: "Demi-finales", 2: "Quarts de finale",
-    3: "8es de finale", 4: "16es de finale", 5: "32es de finale",
-  };
-  return libelles[restants] || `Tour ${info.roundNumber}`;
-}
-
 show(null);
 chargerListeTournois();
+
+// Exposees pour l'attribut onclick de la page.
+window.afficherTableau = afficherTableau;
