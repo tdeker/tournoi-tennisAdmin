@@ -7,25 +7,41 @@
   <link rel="stylesheet" href="../css/admin.css">
 </head>
 <body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a href="../index.html" class="brand">
+        <span class="brand-mark">🎾</span>
+        <span class="brand-text">Tennisado <span>Admin</span></span>
+      </a>
+      <nav class="nav-links" aria-label="Navigation principale">
+        <a href="../index.html" class="nav-link">Accueil</a>
+        <a href="generer-poules.html" class="nav-link">Poules</a>
+        <a href="tableaux.html" class="nav-link active">Tableaux</a>
+      </nav>
+    </div>
+  </header>
+
   <div class="layout">
-    <header class="header">
+    <header class="page-header">
       <a href="../index.html" class="back-btn">← Retour</a>
-      <span class="header-icon">🎾</span>
-      <h1>Tennisado <span class="header-sub">Admin</span></h1>
+      <h1 class="page-title">Tableaux</h1>
+      <p class="page-desc">Consultez les tableaux principal et consolantes, puis exportez-les en PDF.</p>
     </header>
 
     <main class="card card--tableau">
-      <h2 class="card-title">Tableaux — principal &amp; consolantes</h2>
-
-      <div class="tableau-controls">
-        <label for="tournoi-select">Tournoi :</label>
-        <select id="tournoi-select"></select>
-        <button class="generate-btn" id="afficher-btn" onclick="afficherTableau()">
-          Afficher
-        </button>
-        <button class="pdf-btn" id="pdf-btn" onclick="telechargerPDF()" disabled>
-          📄 Télécharger en PDF
-        </button>
+      <div class="tableau-toolbar">
+        <div class="toolbar-field">
+          <label for="tournoi-select">Tournoi</label>
+          <select id="tournoi-select" aria-label="Sélectionner un tournoi"></select>
+        </div>
+        <div class="toolbar-actions">
+          <button class="generate-btn" id="afficher-btn" onclick="afficherTableau()">
+            Afficher
+          </button>
+          <button class="pdf-btn" id="pdf-btn" onclick="telechargerPDF()" disabled title="Affichez d'abord un tableau">
+            Télécharger en PDF
+          </button>
+        </div>
       </div>
 
       <div id="state-loading" class="hidden">
@@ -39,18 +55,19 @@
         <p id="error-detail" class="error-detail"></p>
       </div>
 
-      <!-- Titre visible uniquement a l'impression (nom du tournoi +
-           date), absent a l'ecran : voir .print-only dans admin.css. -->
       <h3 id="print-title" class="print-only"></h3>
 
-      <!-- Conteneur bracketry : scroll horizontal pour les grands
-           tableaux (jusqu'à 64), pas de hauteur fixe (auto-height via
-           useClassicalLayout côté JS). -->
       <div class="bracket-scroll">
+        <div id="bracket-empty" class="bracket-empty">
+          <span class="bracket-empty-icon">🏆</span>
+          <span>Sélectionnez un tournoi puis cliquez sur « Afficher »</span>
+        </div>
         <div class="bracket-wrapper"></div>
       </div>
     </main>
   </div>
+
+  <footer class="footer">Tennisado Admin — Interface de gestion du tournoi</footer>
 
   <script src="../js/bracket-viewer.js"></script>
 </body>

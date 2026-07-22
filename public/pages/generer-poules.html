@@ -7,37 +7,45 @@
   <link rel="stylesheet" href="../css/admin.css">
 </head>
 <body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a href="../index.html" class="brand">
+        <span class="brand-mark">🎾</span>
+        <span class="brand-text">Tennisado <span>Admin</span></span>
+      </a>
+      <nav class="nav-links" aria-label="Navigation principale">
+        <a href="../index.html" class="nav-link">Accueil</a>
+        <a href="generer-poules.html" class="nav-link active">Poules</a>
+        <a href="tableaux.html" class="nav-link">Tableaux</a>
+      </nav>
+    </div>
+  </header>
+
   <div class="layout">
-    <header class="header">
+    <header class="page-header">
       <a href="../index.html" class="back-btn">← Retour</a>
-      <span class="header-icon">🎾</span>
-      <h1>Tennisado <span class="header-sub">Admin</span></h1>
+      <h1 class="page-title">Génération des poules</h1>
+      <p class="page-desc">Déclenche la création automatique des poules à partir des inscriptions Airtable.</p>
     </header>
 
     <main class="card">
-      <h2 class="card-title">Génération des poules</h2>
-
-      <!-- État : initial -->
       <div id="state-idle">
-        <button class="generate-btn" onclick="callApi()">⚙️ Générer les poules</button>
-        <p class="idle-hint">Cliquez pour lancer la génération</p>
+        <button class="generate-btn" onclick="callApi()">Générer les poules</button>
+        <p class="idle-hint">L'opération peut prendre quelques secondes.</p>
       </div>
 
-      <!-- État : chargement -->
       <div id="state-loading" class="hidden">
         <div class="spinner"></div>
-        <p class="status-text">Génération en cours...</p>
+        <p class="status-text">Génération en cours…</p>
       </div>
 
-      <!-- État : succès -->
       <div id="state-success" class="hidden">
         <div class="result-icon success-icon">✓</div>
-        <p class="success-title">Poules générées avec succès !</p>
-        <p class="hint">Vous pouvez fermer cette page.</p>
+        <p class="success-title">Poules générées avec succès</p>
+        <p class="hint">Les poules sont disponibles dans Airtable.</p>
         <div id="response-data" class="response-box hidden"></div>
       </div>
 
-      <!-- État : erreur -->
       <div id="state-error" class="hidden">
         <div class="result-icon error-icon">✕</div>
         <p class="error-title">Erreur lors de la génération</p>
@@ -46,6 +54,8 @@
       </div>
     </main>
   </div>
+
+  <footer class="footer">Tennisado Admin — Interface de gestion du tournoi</footer>
 
   <script src="../js/generer-poules.js"></script>
 </body>
