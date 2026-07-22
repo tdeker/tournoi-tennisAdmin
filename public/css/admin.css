@@ -346,3 +346,102 @@ a {
 @media (max-width: 640px) {
   .card--tableau { width: 100%; margin-left: 0; }
 }
+
+/* ── Bouton PDF (secondaire, a cote de "Afficher") ── */
+.pdf-btn {
+  flex: 0 0 auto;
+  padding: 10px 20px;
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 10px;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, opacity 0.2s;
+}
+.pdf-btn:hover:not(:disabled) {
+  background: var(--accent);
+  color: white;
+}
+.pdf-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* Titre affiche uniquement a l'impression (nom du tournoi + date) :
+   invisible a l'ecran, seul .print-only le revele (regle @media print
+   plus bas). */
+.print-only {
+  display: none;
+}
+
+/* ── Impression / export PDF ──
+   Le bouton "Telecharger en PDF" appelle window.print() (voir
+   bracket-viewer.js) : cette feuille de style definit le rendu papier.
+   bracketry applique ses couleurs via des variables CSS en style
+   INLINE sur .bracket-root (rootBgColor, matchTextColor, etc.) ; on
+   les neutralise ici avec !important, qui l'emporte sur un style
+   inline sans !important (regle standard de la cascade CSS). */
+@media print {
+  /* Elements de navigation/controle : inutiles sur papier. */
+  .back-btn,
+  .tableau-controls,
+  #state-loading,
+  #state-error {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block;
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0 0 16px;
+    text-align: left;
+  }
+
+  /* Fond clair, texte sombre : le theme sombre de l'ecran ne s'imprime
+     pas bien (et la plupart des navigateurs n'impriment pas les
+     couleurs de fond par defaut, ce qui rendrait le texte clair
+     invisible sur la page blanche). */
+  body, .layout, .card--tableau {
+    background: #ffffff !important;
+    color: #0f172a !important;
+  }
+  .card--tableau {
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    width: 100% !important;
+    margin: 0 !important;
+  }
+  .card-title { color: #0f172a !important; }
+
+  /* Le tableau doit s'imprimer en entier, sans scroll ni troncature :
+     le moteur d'impression du navigateur gere la mise a l'echelle /
+     pagination du contenu qui deborde de la largeur de page. */
+  .bracket-scroll {
+    overflow: visible !important;
+    padding: 0 !important;
+  }
+
+  /* Neutralise le theme sombre applique en inline par bracketry
+     (voir bracket-viewer.js : rootBgColor, matchTextColor, etc.). */
+  .bracket-root {
+    --rootBgColor: #ffffff !important;
+    --rootBorderColor: #cbd5e1 !important;
+    --matchTextColor: #0f172a !important;
+    --roundTitleColor: #334155 !important;
+    --connectionLinesColor: #94a3b8 !important;
+  }
+
+  /* Suggestion de mise en page : la plupart des tableaux sont plus
+     lisibles en paysage (plus de tours visibles par ligne). */
+  @page {
+    size: landscape;
+    margin: 12mm;
+  }
+}

@@ -23,6 +23,9 @@
         <button class="generate-btn" id="afficher-btn" onclick="afficherTableau()">
           Afficher
         </button>
+        <button class="pdf-btn" id="pdf-btn" onclick="telechargerPDF()" disabled>
+          📄 Télécharger en PDF
+        </button>
       </div>
 
       <div id="state-loading" class="hidden">
@@ -35,6 +38,10 @@
         <p class="error-title">Impossible d'afficher le tableau</p>
         <p id="error-detail" class="error-detail"></p>
       </div>
+
+      <!-- Titre visible uniquement a l'impression (nom du tournoi +
+           date), absent a l'ecran : voir .print-only dans admin.css. -->
+      <h3 id="print-title" class="print-only"></h3>
 
       <!-- Conteneur bracketry : scroll horizontal pour les grands
            tableaux (jusqu'à 64), pas de hauteur fixe (auto-height via
