@@ -31,6 +31,11 @@ function show(id) {
     const el = document.getElementById(id);
     if (el) el.classList.remove("hidden");
   }
+  const empty = document.getElementById("bracket-empty");
+  if (empty) {
+    const hasBracket = document.querySelector(".bracket-wrapper .bracket-root");
+    empty.classList.toggle("hidden", id === "state-loading" || !!hasBracket);
+  }
 }
 
 function afficherErreur(message) {
@@ -94,6 +99,9 @@ async function afficherTableau() {
 
     show(null);
 
+    const empty = document.getElementById("bracket-empty");
+    if (empty) empty.classList.add("hidden");
+
     const wrapper = document.querySelector(".bracket-wrapper");
     wrapper.innerHTML = ""; // reinitialise avant un nouveau rendu
 
@@ -103,12 +111,12 @@ async function afficherTableau() {
       displayWholeRounds: true,   // pas de tour partiellement visible
       matchMaxWidth: 240,
       useClassicalLayout: true,   // hauteur stable, adaptee au desktop
-      // Theme sombre, coherent avec le reste de l'admin.
-      rootBgColor: "#111827",
-      rootBorderColor: "#1f2d45",
-      matchTextColor: "#f1f5f9",
-      roundTitleColor: "#94a3b8",
-      connectionLinesColor: "#1f2d45",
+      // Theme clair, aligne sur l'export PDF et le reste de l'admin.
+      rootBgColor: "#f8fafc",
+      rootBorderColor: "#cbd5e1",
+      matchTextColor: "#0f172a",
+      roundTitleColor: "#475569",
+      connectionLinesColor: "#94a3b8",
       matchFontSize: 15,
     });
 

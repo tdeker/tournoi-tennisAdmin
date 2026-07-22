@@ -1,17 +1,28 @@
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@400;500;600&display=swap');
 
-/* ── Variables ── */
+/* ── Variables (alignées sur l'export PDF / impression) ── */
 :root {
-  --bg:        #0a0f1e;
-  --surface:   #111827;
-  --border:    #1f2d45;
-  --accent:    #3b82f6;
-  --accent-h:  #2563eb;
-  --success:   #22c55e;
-  --error:     #ef4444;
-  --text:      #f1f5f9;
-  --muted:     #64748b;
-  --subtle:    #94a3b8;
+  --bg:           #f1f5f9;
+  --surface:      #ffffff;
+  --surface-alt:  #f8fafc;
+  --border:       #e2e8f0;
+  --border-strong:#cbd5e1;
+  --accent:       #1d4ed8;
+  --accent-h:     #1e40af;
+  --accent-soft:  #eff6ff;
+  --success:      #16a34a;
+  --success-soft: #f0fdf4;
+  --error:        #dc2626;
+  --error-soft:   #fef2f2;
+  --text:         #0f172a;
+  --muted:        #64748b;
+  --subtle:       #475569;
+  --shadow-sm:    0 1px 2px rgba(15, 23, 42, 0.06);
+  --shadow:       0 4px 16px rgba(15, 23, 42, 0.08);
+  --shadow-lg:    0 12px 40px rgba(15, 23, 42, 0.1);
+  --radius:       12px;
+  --radius-lg:    16px;
+  --topbar-h:     64px;
 }
 
 /* ── Reset ── */
@@ -27,6 +38,8 @@ body {
   background: var(--bg);
   color: var(--text);
   min-height: 100vh;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
 }
 
 a {
@@ -34,162 +47,274 @@ a {
   color: inherit;
 }
 
-/* ── Layout ── */
-.layout {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 32px 24px;
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
-/* ── Header ── */
-.header {
+/* ── Barre de navigation ── */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: var(--topbar-h);
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+
+.topbar-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 100%;
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 48px;
-  position: relative;
+  gap: 24px;
 }
 
-.header-icon {
-  font-size: 28px;
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
 }
 
-.header h1 {
+.brand-mark {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  box-shadow: 0 2px 8px rgba(29, 78, 216, 0.25);
+}
+
+.brand-text {
   font-family: 'Syne', sans-serif;
-  font-size: 1.6rem;
   font-weight: 800;
+  font-size: 1.15rem;
+  letter-spacing: -0.4px;
   color: var(--text);
-  letter-spacing: -0.5px;
 }
 
-.header-sub {
-  font-weight: 400;
+.brand-text span {
+  font-weight: 500;
   color: var(--muted);
-  font-size: 1.1rem;
+  font-size: 0.95rem;
   margin-left: 4px;
 }
 
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+}
+
+.nav-link {
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--subtle);
+  transition: background 0.15s, color 0.15s;
+}
+
+.nav-link:hover {
+  background: var(--surface-alt);
+  color: var(--text);
+}
+
+.nav-link.active {
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 600;
+}
+
 .back-btn {
-  font-size: 0.85rem;
-  color: var(--muted);
-  margin-right: auto;
-  padding: 6px 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--subtle);
+  padding: 8px 14px;
   border: 1px solid var(--border);
-  border-radius: 6px;
-  transition: color 0.2s, border-color 0.2s;
+  border-radius: 8px;
+  background: var(--surface);
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
 }
 
 .back-btn:hover {
   color: var(--text);
-  border-color: var(--subtle);
+  border-color: var(--border-strong);
+  background: var(--surface-alt);
+}
+
+/* ── Layout ── */
+.layout {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 24px 48px;
+}
+
+.page-header {
+  margin-bottom: 28px;
+}
+
+.page-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.75rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.page-header .back-btn {
+  margin-bottom: 16px;
 }
 
 /* ── Menu grille (index) ── */
 .menu-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
 }
 
 .menu-card {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 32px 24px;
-  text-align: center;
+  border-radius: var(--radius-lg);
+  padding: 28px 24px;
   cursor: pointer;
   transition: border-color 0.2s, transform 0.15s, box-shadow 0.2s;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: var(--shadow-sm);
 }
 
 .menu-card:not(.disabled):hover {
   border-color: var(--accent);
-  transform: translateY(-3px);
-  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.15);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
 }
 
 .menu-card.disabled {
-  opacity: 0.4;
+  opacity: 0.55;
   cursor: default;
+  background: var(--surface-alt);
 }
 
 .menu-card-icon {
-  font-size: 36px;
-  margin-bottom: 12px;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: var(--accent-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+
+.menu-card.disabled .menu-card-icon {
+  background: var(--border);
 }
 
 .menu-card-label {
   font-family: 'Syne', sans-serif;
-  font-size: 0.95rem;
+  font-size: 1.05rem;
   font-weight: 700;
   color: var(--text);
 }
 
+.menu-card-desc {
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
 .badge {
   position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 0.65rem;
+  top: 14px;
+  right: 14px;
+  font-size: 0.7rem;
   background: var(--border);
   color: var(--subtle);
-  padding: 2px 8px;
+  padding: 3px 10px;
   border-radius: 99px;
-  font-weight: 500;
+  font-weight: 600;
+  letter-spacing: 0.02em;
 }
 
 /* ── Card (pages internes) ── */
 .card {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 48px 40px;
+  border-radius: var(--radius-lg);
+  padding: 40px;
   text-align: center;
-  max-width: 480px;
+  max-width: 520px;
   margin: 0 auto;
+  box-shadow: var(--shadow-sm);
 }
 
 .card-title {
   font-family: 'Syne', sans-serif;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 700;
   color: var(--subtle);
-  margin-bottom: 32px;
-  letter-spacing: -0.3px;
+  margin-bottom: 28px;
+  letter-spacing: -0.2px;
 }
 
 /* ── Bouton principal ── */
 .generate-btn {
-  padding: 14px 32px;
+  padding: 12px 28px;
   background: var(--accent);
   color: white;
   border: none;
   border-radius: 10px;
   font-family: 'Syne', sans-serif;
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 700;
   cursor: pointer;
-  transition: background 0.2s, transform 0.1s;
+  transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
   margin-bottom: 12px;
+  box-shadow: 0 2px 8px rgba(29, 78, 216, 0.2);
 }
 
-.generate-btn:hover {
+.generate-btn:hover:not(:disabled) {
   background: var(--accent-h);
-  transform: translateY(-2px);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(29, 78, 216, 0.25);
 }
 
-.generate-btn:active {
+.generate-btn:active:not(:disabled) {
   transform: translateY(0);
 }
 
+.generate-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
 .idle-hint {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   color: var(--muted);
 }
 
 /* ── Spinner ── */
 .spinner {
-  width: 48px;
-  height: 48px;
+  width: 44px;
+  height: 44px;
   border: 3px solid var(--border);
   border-top-color: var(--accent);
   border-radius: 50%;
@@ -202,55 +327,55 @@ a {
 }
 
 .status-text {
-  font-size: 1rem;
-  color: #93c5fd;
+  font-size: 0.95rem;
+  color: var(--accent);
   font-weight: 500;
 }
 
 /* ── Résultats (succès / erreur) ── */
 .result-icon {
-  width: 56px;
-  height: 56px;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 22px;
-  margin: 0 auto 20px;
+  font-size: 20px;
+  margin: 0 auto 18px;
   font-weight: 700;
 }
 
 .success-icon {
-  background: rgba(34, 197, 94, 0.1);
+  background: var(--success-soft);
   border: 2px solid var(--success);
   color: var(--success);
 }
 
 .success-title {
   font-family: 'Syne', sans-serif;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   font-weight: 700;
-  color: #4ade80;
+  color: var(--success);
   margin-bottom: 8px;
 }
 
 .error-icon {
-  background: rgba(239, 68, 68, 0.1);
+  background: var(--error-soft);
   border: 2px solid var(--error);
   color: var(--error);
 }
 
 .error-title {
   font-family: 'Syne', sans-serif;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   font-weight: 700;
-  color: #f87171;
+  color: var(--error);
   margin-bottom: 8px;
 }
 
 .error-detail {
-  font-size: 0.8rem;
-  color: #fca5a5;
+  font-size: 0.85rem;
+  color: #b91c1c;
   margin-top: 8px;
 }
 
@@ -260,18 +385,19 @@ a {
 }
 
 .response-box {
-  background: var(--bg);
-  border: 1px solid rgba(34, 197, 94, 0.2);
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
   border-radius: 8px;
   padding: 12px 16px;
   font-size: 0.8rem;
-  color: #86efac;
+  color: var(--subtle);
   text-align: left;
   margin-top: 16px;
   max-height: 150px;
   overflow-y: auto;
   word-break: break-all;
   white-space: pre-wrap;
+  font-family: ui-monospace, monospace;
 }
 
 .retry-btn {
@@ -294,42 +420,88 @@ a {
 
 /* ── Utilitaire ── */
 .hidden {
-  display: none;
+  display: none !important;
 }
 
-/* ===== Page Tableaux — affichage ORDINATEUR (bracketry) ===== */
+/* ===== Page Tableaux ===== */
 
-.tableau-controls {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 24px;
-}
-.tableau-controls label { color: var(--subtle); font-size: 0.95rem; }
-
-#tournoi-select {
-  flex: 0 1 340px;
-  min-width: 220px;
-  padding: 10px 12px;
-  background: var(--bg);
-  color: var(--text);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  font-size: 0.95rem;
-}
-#tournoi-select:focus { outline: none; border-color: var(--accent); }
-.tableau-controls .generate-btn { flex: 0 0 auto; width: auto; padding: 10px 20px; }
-
-/* --- La carte du tableau prend TOUTE la largeur de l'écran ---
-   Un tableau de 64 est très large sur desktop : on sort la carte de
-   la colonne étroite du layout et on autorise le scroll horizontal.
-   (bracketry gère lui-même sa largeur interne ; ce conteneur ne fait
-   que permettre le défilement quand le contenu dépasse l'écran.) */
 .card--tableau {
   max-width: none;
   width: calc(100vw - 48px);
   margin-left: calc(-50vw + 50% + 24px);
+  text-align: left;
+  padding: 32px;
+}
+
+.tableau-toolbar {
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin-bottom: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 16px;
+}
+
+.toolbar-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1 1 280px;
+  min-width: 200px;
+}
+
+.toolbar-field label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--subtle);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+#tournoi-select {
+  width: 100%;
+  padding: 10px 36px 10px 12px;
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+#tournoi-select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.12);
+}
+
+#tournoi-select:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.toolbar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  flex: 0 0 auto;
+}
+
+.tableau-controls .generate-btn,
+.toolbar-actions .generate-btn {
+  margin-bottom: 0;
+  flex: 0 0 auto;
+  width: auto;
+  padding: 10px 22px;
 }
 
 .bracket-scroll {
@@ -337,59 +509,124 @@ a {
   overflow-y: visible;
   padding: 8px 4px 20px;
   -webkit-overflow-scrolling: touch;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-alt);
+  min-height: 120px;
 }
 
-/* Le thème sombre de bracketry est fourni via les options JS
-   (rootBgColor, matchTextColor, etc. dans bracket-viewer.js) : rien à
-   surcharger ici en CSS pour ses couleurs internes. */
-
-@media (max-width: 640px) {
-  .card--tableau { width: 100%; margin-left: 0; }
+.bracket-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 160px;
+  color: var(--muted);
+  font-size: 0.9rem;
+  gap: 8px;
+  padding: 24px;
 }
 
-/* ── Bouton PDF (secondaire, a cote de "Afficher") ── */
+.bracket-empty-icon {
+  font-size: 2rem;
+  opacity: 0.5;
+}
+
+/* ── Bouton PDF ── */
 .pdf-btn {
   flex: 0 0 auto;
   padding: 10px 20px;
-  background: transparent;
+  background: var(--surface);
   color: var(--accent);
   border: 1px solid var(--accent);
   border-radius: 10px;
   font-family: 'Syne', sans-serif;
-  font-size: 0.9rem;
+  font-size: 0.875rem;
   font-weight: 700;
   cursor: pointer;
   transition: background 0.2s, color 0.2s, opacity 0.2s;
 }
+
 .pdf-btn:hover:not(:disabled) {
   background: var(--accent);
   color: white;
 }
+
 .pdf-btn:disabled {
   opacity: 0.4;
-  cursor: default;
+  cursor: not-allowed;
 }
 
-/* Titre affiche uniquement a l'impression (nom du tournoi + date) :
-   invisible a l'ecran, seul .print-only le revele (regle @media print
-   plus bas). */
 .print-only {
   display: none;
 }
 
-/* ── Impression / export PDF ──
-   Le bouton "Telecharger en PDF" appelle window.print() (voir
-   bracket-viewer.js) : cette feuille de style definit le rendu papier.
-   bracketry applique ses couleurs via des variables CSS en style
-   INLINE sur .bracket-root (rootBgColor, matchTextColor, etc.) ; on
-   les neutralise ici avec !important, qui l'emporte sur un style
-   inline sans !important (regle standard de la cascade CSS). */
+/* ── Pied de page ── */
+.footer {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px;
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--muted);
+  border-top: 1px solid var(--border);
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .topbar-inner {
+    padding: 0 16px;
+    gap: 12px;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .layout {
+    padding: 24px 16px 40px;
+  }
+
+  .page-title {
+    font-size: 1.4rem;
+  }
+
+  .card {
+    padding: 28px 20px;
+  }
+
+  .card--tableau {
+    width: 100%;
+    margin-left: 0;
+    padding: 20px 16px;
+  }
+
+  .tableau-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .toolbar-actions {
+    width: 100%;
+  }
+
+  .toolbar-actions .generate-btn,
+  .toolbar-actions .pdf-btn {
+    flex: 1;
+    text-align: center;
+    justify-content: center;
+  }
+}
+
+/* ── Impression / export PDF ── */
 @media print {
-  /* Elements de navigation/controle : inutiles sur papier. */
-  .back-btn,
-  .tableau-controls,
+  .topbar,
+  .page-header,
+  .tableau-toolbar,
   #state-loading,
-  #state-error {
+  #state-error,
+  .bracket-empty,
+  .footer {
     display: none !important;
   }
 
@@ -403,14 +640,11 @@ a {
     text-align: left;
   }
 
-  /* Fond clair, texte sombre : le theme sombre de l'ecran ne s'imprime
-     pas bien (et la plupart des navigateurs n'impriment pas les
-     couleurs de fond par defaut, ce qui rendrait le texte clair
-     invisible sur la page blanche). */
   body, .layout, .card--tableau {
     background: #ffffff !important;
     color: #0f172a !important;
   }
+
   .card--tableau {
     border: none !important;
     box-shadow: none !important;
@@ -418,18 +652,17 @@ a {
     width: 100% !important;
     margin: 0 !important;
   }
+
   .card-title { color: #0f172a !important; }
 
-  /* Le tableau doit s'imprimer en entier, sans scroll ni troncature :
-     le moteur d'impression du navigateur gere la mise a l'echelle /
-     pagination du contenu qui deborde de la largeur de page. */
   .bracket-scroll {
     overflow: visible !important;
     padding: 0 !important;
+    border: none !important;
+    background: transparent !important;
+    min-height: 0 !important;
   }
 
-  /* Neutralise le theme sombre applique en inline par bracketry
-     (voir bracket-viewer.js : rootBgColor, matchTextColor, etc.). */
   .bracket-root {
     --rootBgColor: #ffffff !important;
     --rootBorderColor: #cbd5e1 !important;
@@ -438,8 +671,6 @@ a {
     --connectionLinesColor: #94a3b8 !important;
   }
 
-  /* Suggestion de mise en page : la plupart des tableaux sont plus
-     lisibles en paysage (plus de tours visibles par ligne). */
   @page {
     size: landscape;
     margin: 12mm;
