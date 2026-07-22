@@ -297,8 +297,7 @@ a {
   display: none;
 }
 
-
-/* ===== Page Tableaux (à coller à la fin de public/css/admin.css) ===== */
+/* ===== Page Tableaux — affichage ORDINATEUR (bracketry) ===== */
 
 .tableau-controls {
   display: flex;
@@ -307,15 +306,11 @@ a {
   gap: 12px;
   margin-bottom: 24px;
 }
-
-.tableau-controls label {
-  color: var(--subtle);
-  font-size: 0.95rem;
-}
+.tableau-controls label { color: var(--subtle); font-size: 0.95rem; }
 
 #tournoi-select {
-  flex: 1 1 220px;
-  min-width: 180px;
+  flex: 0 1 340px;
+  min-width: 220px;
   padding: 10px 12px;
   background: var(--bg);
   color: var(--text);
@@ -323,35 +318,31 @@ a {
   border-radius: 8px;
   font-size: 0.95rem;
 }
+#tournoi-select:focus { outline: none; border-color: var(--accent); }
+.tableau-controls .generate-btn { flex: 0 0 auto; width: auto; padding: 10px 20px; }
 
-#tournoi-select:focus {
-  outline: none;
-  border-color: var(--accent);
+/* --- La carte du tableau prend TOUTE la largeur de l'écran ---
+   Un tableau de 64 est très large sur desktop : on sort la carte de
+   la colonne étroite du layout et on autorise le scroll horizontal.
+   (bracketry gère lui-même sa largeur interne ; ce conteneur ne fait
+   que permettre le défilement quand le contenu dépasse l'écran.) */
+.card--tableau {
+  max-width: none;
+  width: calc(100vw - 48px);
+  margin-left: calc(-50vw + 50% + 24px);
 }
 
-.tableau-controls .generate-btn {
-  flex: 0 0 auto;
-  width: auto;
-  padding: 10px 20px;
-}
-
-/* Le conteneur du bracket : on laisse respirer et on autorise le
-   défilement horizontal pour les grands tableaux (jusqu'à 64). */
-.brackets-viewer {
+.bracket-scroll {
   overflow-x: auto;
-  padding: 8px 0;
+  overflow-y: visible;
+  padding: 8px 4px 20px;
+  -webkit-overflow-scrolling: touch;
 }
 
-/* Adaptation légère du thème clair par défaut de brackets-viewer au
-   fond sombre de l'admin (surcharge minimale, non intrusive). */
-.brackets-viewer {
-  --primary-background: var(--surface);
-  --match-background: var(--bg);
-  --font-color: var(--text);
-  --win-color: var(--success);
-  --loss-color: var(--error);
-  --label-color: var(--muted);
-  --round-name-color: var(--subtle);
-  --connector-color: var(--border);
-  --border-color: var(--border);
+/* Le thème sombre de bracketry est fourni via les options JS
+   (rootBgColor, matchTextColor, etc. dans bracket-viewer.js) : rien à
+   surcharger ici en CSS pour ses couleurs internes. */
+
+@media (max-width: 640px) {
+  .card--tableau { width: 100%; margin-left: 0; }
 }
