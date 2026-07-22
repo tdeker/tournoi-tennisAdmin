@@ -77,9 +77,12 @@ async function chargerListeTournois() {
 }
 
 async function afficherTableau() {
-  const nom = document.getElementById("tournoi-select").value;
+  const select = document.getElementById("tournoi-select");
+  const nom = select.value;
+  const pdfBtn = document.getElementById("pdf-btn");
   if (!nom) { afficherErreur("Selectionnez un tournoi."); return; }
 
+  pdfBtn.disabled = true; // desactive tant qu'un tableau n'est pas affiche
   show("state-loading");
   try {
     await bracketryPret; // s'assure que createBracket est charge
@@ -108,13 +111,32 @@ async function afficherTableau() {
       connectionLinesColor: "#1f2d45",
       matchFontSize: 15,
     });
+
+    // Titre affiche uniquement a l'impression (voir .print-only) :
+    // libelle exact de l'option choisie (ex. "[Consolante] Consolante Femmes").
+    const libelle = select.options[select.selectedIndex].textContent;
+    const date = new Date().toLocaleDateString("fr-FR");
+    document.getElementById("print-title").textContent = `${libelle} — ${date}`;
+
+    pdfBtn.disabled = false; // un tableau est affiche : le telechargement est possible
   } catch (err) {
     afficherErreur(err.message);
   }
 }
 
+/* Ouvre la boite de dialogue d'impression du navigateur, avec la
+ * feuille de style @media print dediee (admin.css) qui masque les
+ * controles et neutralise le theme sombre pour un rendu papier propre.
+ * L'utilisateur choisit "Enregistrer en PDF" comme destination : c'est
+ * la maniere standard de produire un PDF cote navigateur, sans
+ * dependance externe (pas de generation cote serveur). */
+function telechargerPDF() {
+  window.print();
+}
+
 show(null);
 chargerListeTournois();
 
-// Exposees pour l'attribut onclick de la page.
+// Exposees pour les attributs onclick de la page.
 window.afficherTableau = afficherTableau;
+window.telechargerPDF = telechargerPDF;
