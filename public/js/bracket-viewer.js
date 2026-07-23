@@ -111,12 +111,12 @@ async function afficherTableau() {
       displayWholeRounds: true,   // pas de tour partiellement visible
       matchMaxWidth: 240,
       useClassicalLayout: true,   // hauteur stable, adaptee au desktop
-      // Theme clair, aligne sur l'export PDF et le reste de l'admin.
-      rootBgColor: "#f8fafc",
-      rootBorderColor: "#cbd5e1",
-      matchTextColor: "#0f172a",
-      roundTitleColor: "#475569",
-      connectionLinesColor: "#94a3b8",
+      // Charte graphique Trois Rivieres (beige/vert/or), alignee sur le PDF.
+      rootBgColor: "#F7F4EC",
+      rootBorderColor: "#ECECEC",
+      matchTextColor: "#202124",
+      roundTitleColor: "#2E6B45",
+      connectionLinesColor: "#B89646",
       matchFontSize: 15,
     });
 

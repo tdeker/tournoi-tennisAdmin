@@ -3,18 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tennisado — Admin</title>
+  <meta name="theme-color" content="#1B3D2A">
+  <title>Tournoi des Trois Rivières — Administration</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="css/admin.css">
 </head>
 <body>
   <header class="topbar">
     <div class="topbar-inner">
       <a href="index.html" class="brand">
-        <span class="brand-mark">🎾</span>
-        <span class="brand-text">Tennisado <span>Admin</span></span>
+        <span class="brand-mark" aria-hidden="true">🎾</span>
+        <span class="brand-text">Trois Rivières <span>Administration</span></span>
       </a>
       <nav class="nav-links" aria-label="Navigation principale">
-        <a href="index.html" class="nav-link active">Accueil</a>
+        <a href="index.html" class="nav-link active" aria-current="page">Accueil</a>
         <a href="pages/generer-poules.html" class="nav-link">Poules</a>
         <a href="pages/tableaux.html" class="nav-link">Tableaux</a>
       </nav>
@@ -23,30 +26,39 @@
 
   <div class="layout">
     <header class="page-header">
+      <span class="eyebrow">Édition 2026</span>
       <h1 class="page-title">Tableau de bord</h1>
-      <p class="page-desc">Gérez la génération des poules et consultez les tableaux de tournoi.</p>
+      <p class="page-desc">Composez les poules à partir des inscriptions, puis consultez et imprimez les tableaux du tournoi.</p>
     </header>
 
     <main class="menu-grid">
-      <a href="pages/generer-poules.html" class="menu-card disabled">
-        <div class="menu-card-icon">⚙️</div>
-        <div class="menu-card-label">Générer les poules</div>
-        <p class="menu-card-desc">Lance la répartition automatique des joueurs en poules via l'API backend.</p>
+      <a href="pages/generer-poules.html" class="menu-card">
+        <div class="menu-card-icon" aria-hidden="true">🏆</div>
+        <h2 class="menu-card-label">Poules</h2>
+        <p class="menu-card-desc">Répartit automatiquement les joueurs inscrits en poules équilibrées.</p>
+        <span class="menu-card-action">Générer</span>
       </a>
+
       <a href="pages/tableaux.html" class="menu-card">
-        <div class="menu-card-icon">🏆</div>
-        <div class="menu-card-label">Tableaux</div>
-        <p class="menu-card-desc">Visualisez les tableaux principal et consolantes, puis exportez-les en PDF.</p>
+        <div class="menu-card-icon" aria-hidden="true">🎾</div>
+        <h2 class="menu-card-label">Tableaux</h2>
+        <p class="menu-card-desc">Affiche le tableau principal et les consolantes, et les exporte en PDF.</p>
+        <span class="menu-card-action">Consulter</span>
       </a>
+
       <div class="menu-card disabled" aria-disabled="true">
-        <div class="menu-card-icon">👥</div>
-        <div class="menu-card-label">Joueurs</div>
-        <p class="menu-card-desc">Consultation et gestion des inscriptions.</p>
-        <span class="badge">Bientôt</span>
+        <div class="menu-card-icon" aria-hidden="true">👤</div>
+        <h2 class="menu-card-label">Joueurs</h2>
+        <p class="menu-card-desc">Consulter et modifier les inscriptions sans passer par Airtable.</p>
+        <span class="menu-card-action">Bientôt disponible</span>
+        <span class="badge">À venir</span>
       </div>
     </main>
   </div>
 
-  <footer class="footer">Tennisado Admin — Interface de gestion du tournoi</footer>
+  <footer class="footer">
+    <strong>Tournoi des Trois Rivières</strong><br>
+    Interface d'administration
+  </footer>
 </body>
 </html>

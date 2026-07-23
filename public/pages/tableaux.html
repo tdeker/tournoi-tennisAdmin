@@ -3,20 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tennisado — Tableaux</title>
+  <meta name="theme-color" content="#1B3D2A">
+  <title>Tableaux — Tournoi des Trois Rivières</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="../css/admin.css">
 </head>
 <body>
   <header class="topbar">
     <div class="topbar-inner">
       <a href="../index.html" class="brand">
-        <span class="brand-mark">🎾</span>
-        <span class="brand-text">Tennisado <span>Admin</span></span>
+        <span class="brand-mark" aria-hidden="true">🎾</span>
+        <span class="brand-text">Trois Rivières <span>Administration</span></span>
       </a>
       <nav class="nav-links" aria-label="Navigation principale">
         <a href="../index.html" class="nav-link">Accueil</a>
         <a href="generer-poules.html" class="nav-link">Poules</a>
-        <a href="tableaux.html" class="nav-link active">Tableaux</a>
+        <a href="tableaux.html" class="nav-link active" aria-current="page">Tableaux</a>
       </nav>
     </div>
   </header>
@@ -24,8 +27,9 @@
   <div class="layout">
     <header class="page-header">
       <a href="../index.html" class="back-btn">← Retour</a>
+      <span class="eyebrow">Étape 2</span>
       <h1 class="page-title">Tableaux</h1>
-      <p class="page-desc">Consultez les tableaux principal et consolantes, puis exportez-les en PDF.</p>
+      <p class="page-desc">Affiche le tableau principal et les consolantes tels qu'ils sont enregistrés, et les prépare pour l'impression.</p>
     </header>
 
     <main class="card card--tableau">
@@ -35,23 +39,19 @@
           <select id="tournoi-select" aria-label="Sélectionner un tournoi"></select>
         </div>
         <div class="toolbar-actions">
-          <button class="generate-btn" id="afficher-btn" onclick="afficherTableau()">
-            Afficher
-          </button>
-          <button class="pdf-btn" id="pdf-btn" onclick="telechargerPDF()" disabled title="Affichez d'abord un tableau">
-            Télécharger en PDF
-          </button>
+          <button class="generate-btn" id="afficher-btn" onclick="afficherTableau()">Afficher</button>
+          <button class="pdf-btn" id="pdf-btn" onclick="telechargerPDF()" disabled title="Affichez d'abord un tableau">Télécharger en PDF</button>
         </div>
       </div>
 
       <div id="state-loading" class="hidden">
-        <div class="spinner"></div>
+        <div class="spinner" role="status" aria-live="polite"></div>
         <p class="status-text">Chargement du tableau…</p>
       </div>
 
       <div id="state-error" class="hidden">
-        <div class="result-icon error-icon">✕</div>
-        <p class="error-title">Impossible d'afficher le tableau</p>
+        <div class="result-icon error-icon" aria-hidden="true">✕</div>
+        <p class="error-title">Tableau indisponible</p>
         <p id="error-detail" class="error-detail"></p>
       </div>
 
@@ -59,15 +59,18 @@
 
       <div class="bracket-scroll">
         <div id="bracket-empty" class="bracket-empty">
-          <span class="bracket-empty-icon">🏆</span>
-          <span>Sélectionnez un tournoi puis cliquez sur « Afficher »</span>
+          <span class="bracket-empty-icon" aria-hidden="true">🏆</span>
+          <span>Choisissez un tournoi, puis cliquez sur « Afficher ».</span>
         </div>
         <div class="bracket-wrapper"></div>
       </div>
     </main>
   </div>
 
-  <footer class="footer">Tennisado Admin — Interface de gestion du tournoi</footer>
+  <footer class="footer">
+    <strong>Tournoi des Trois Rivières</strong><br>
+    Interface d'administration
+  </footer>
 
   <script src="../js/bracket-viewer.js"></script>
 </body>
