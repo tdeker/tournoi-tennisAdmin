@@ -111,7 +111,7 @@ async function afficherTableau() {
       displayWholeRounds: true,   // pas de tour partiellement visible
       matchMaxWidth: 240,
       useClassicalLayout: true,   // hauteur stable, adaptee au desktop
-      // Charte graphique Trois Rivieres (beige/vert/or), alignee sur le PDF.
+      // Charte graphique Open des Trois Rivieres (beige/vert/or), alignee sur le PDF.
       rootBgColor: "#F7F4EC",
       rootBorderColor: "#ECECEC",
       matchTextColor: "#202124",
