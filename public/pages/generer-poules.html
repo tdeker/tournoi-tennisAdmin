@@ -3,67 +3,49 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#1B3D2A">
-  <title>Poules — Tournoi des Trois Rivières</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <title>Tennisado — Générer les poules</title>
   <link rel="stylesheet" href="../css/admin.css">
 </head>
 <body>
-  <header class="topbar">
-    <div class="topbar-inner">
-      <a href="../index.html" class="brand">
-        <span class="brand-mark" aria-hidden="true">🎾</span>
-        <span class="brand-text">Trois Rivières <span>Administration</span></span>
-      </a>
-      <nav class="nav-links" aria-label="Navigation principale">
-        <a href="../index.html" class="nav-link">Accueil</a>
-        <a href="generer-poules.html" class="nav-link active" aria-current="page">Poules</a>
-        <a href="tableaux.html" class="nav-link">Tableaux</a>
-      </nav>
-    </div>
-  </header>
-
   <div class="layout">
-    <header class="page-header">
+    <header class="header">
       <a href="../index.html" class="back-btn">← Retour</a>
-      <span class="eyebrow">Étape 1</span>
-      <h1 class="page-title">Poules</h1>
-      <p class="page-desc">Répartit les joueurs inscrits dans Airtable en poules équilibrées. La répartition existante est remplacée.</p>
+      <span class="header-icon">🎾</span>
+      <h1>Tennisado <span class="header-sub">Admin</span></h1>
     </header>
 
     <main class="card">
+      <h2 class="card-title">Génération des poules</h2>
+
+      <!-- État : initial -->
       <div id="state-idle">
-        <h2 class="card-title">Prêt à composer les poules</h2>
-        <button class="generate-btn" onclick="callApi()">Générer les poules</button>
-        <p class="idle-hint">Comptez quelques secondes le temps du calcul.</p>
+        <button class="generate-btn" onclick="callApi()" disabled>⚙️ Générer les poules</button>
+        <p class="idle-hint">Génération désactivée — les poules ont déjà été créées.</p>
       </div>
 
+      <!-- État : chargement -->
       <div id="state-loading" class="hidden">
-        <div class="spinner" role="status" aria-live="polite"></div>
-        <p class="status-text">Composition des poules en cours…</p>
+        <div class="spinner"></div>
+        <p class="status-text">Génération en cours...</p>
       </div>
 
+      <!-- État : succès -->
       <div id="state-success" class="hidden">
-        <div class="result-icon success-icon" aria-hidden="true">✓</div>
-        <p class="success-title">Poules générées</p>
-        <p class="hint">Les poules sont enregistrées dans Airtable.</p>
+        <div class="result-icon success-icon">✓</div>
+        <p class="success-title">Poules générées avec succès !</p>
+        <p class="hint">Vous pouvez fermer cette page.</p>
         <div id="response-data" class="response-box hidden"></div>
       </div>
 
+      <!-- État : erreur -->
       <div id="state-error" class="hidden">
-        <div class="result-icon error-icon" aria-hidden="true">✕</div>
-        <p class="error-title">La génération a échoué</p>
+        <div class="result-icon error-icon">✕</div>
+        <p class="error-title">Erreur lors de la génération</p>
         <p id="error-detail" class="error-detail"></p>
-        <button class="retry-btn" onclick="callApi()">Relancer la génération</button>
+        <button class="retry-btn" onclick="callApi()" disabled>Réessayer</button>
       </div>
     </main>
   </div>
-
-  <footer class="footer">
-    <strong>Tournoi des Trois Rivières</strong><br>
-    Interface d'administration
-  </footer>
 
   <script src="../js/generer-poules.js"></script>
 </body>

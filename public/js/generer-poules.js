@@ -1,5 +1,10 @@
 const API_URL = "https://tournoi-tennisado-production.up.railway.app/api/poules/generer";
 
+// Génération désactivée depuis l'interface : les poules ont déjà été
+// créées pour ce tournoi. Passer à true réactive le bouton (voir aussi
+// l'attribut "disabled" sur les boutons dans generer-poules.html).
+const GENERATION_DESACTIVEE = true;
+
 function show(id) {
   ["state-idle", "state-loading", "state-success", "state-error"].forEach(s => {
     document.getElementById(s).classList.add("hidden");
@@ -8,6 +13,8 @@ function show(id) {
 }
 
 async function callApi() {
+  if (GENERATION_DESACTIVEE) return; // garde cote JS, en plus du bouton grise
+
   show("state-loading");
 
   try {
